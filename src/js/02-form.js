@@ -22,10 +22,22 @@ const loadedValues = localStorage.getItem(localStorageKey);
 if (loadedValues) {
     try {
         const formLoadedValues = JSON.parse(loadedValues);
-        emailInput.value = formLoadedValues.email;
-        messageTextarea.value = formLoadedValues.message;
+        emailInput.value = formLoadedValues.email ?? "";
+        messageTextarea.value = formLoadedValues.message ?? "";
     } catch {
         console.error("Błąd podczas parsowania JSON pobranego z local storage:", error);
     }
 }
- 
+
+feedbackForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    const email = evt.target.elements.email.value;
+    const message = evt.target.elements.message.value;
+    if (email === "" || message === "") {
+        alert('All form fields must be filled in');
+    } else {
+        console.log(`email: ${email}\nmessage: ${message}`);
+        localStorage.removeItem(localStorageKey);
+        feedbackForm.reset();
+    }
+});
