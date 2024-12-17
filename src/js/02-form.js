@@ -18,4 +18,14 @@ feedbackForm.addEventListener("input", () => {
     }
 });
 
+const loadedValues = localStorage.getItem(localStorageKey);
+if (loadedValues) {
+    try {
+        const formLoadedValues = JSON.parse(loadedValues);
+        emailInput.value = formLoadedValues.email;
+        messageTextarea.value = formLoadedValues.message;
+    } catch {
+        console.error("Błąd podczas parsowania JSON pobranego z local storage:", error);
+    }
+}
  
